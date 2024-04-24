@@ -12,15 +12,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 		return -1;
 	}
 
-	Player* player = new Player();
+	Player* player = new Player();	//新しいプレイヤーオブジェクトを生成
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
+
+	//メインループ
 	while (ProcessMessage() != -1)
 	{
-		InputControl::Update();
+		InputControl::Update();	//入力更新
+
+		player->Update();	//プレイヤー更新処理
 
 		Vector2D tmp = player->GetLocation();
+
+		//画面外に出たら反対側に送る処理
 		if (tmp.x < 0.0f || 640.0f < tmp.x)
 		{
 			if (tmp.x < 0)
@@ -29,7 +35,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 			}
 			else
 			{
-				tmp.x = 640.0f;
+				tmp.x = 0.0f;
 			}
 			player->SetLocation(tmp);
 		}
@@ -46,21 +52,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 			}
 		}
 
-		player->SetLocation(tmp);
+		player->SetLocation(tmp);	//プレイヤーの座標配置
 
-		ClearDrawScreen();
+		ClearDrawScreen();	//描画画面初期化
 
-		player->Draw();
+		player->Draw();	//プレイヤーの描画
 
-		ScreenFlip();
+		ScreenFlip();	//画面反転
 
+
+		//ESCキー押したらプログラムを終了する
 		if (InputControl::GetKeyUp(KEY_INPUT_ESCAPE))
 		{
 			break;
 		}
 	}
 
-	delete player;
+	delete player;	//プレイヤーオブジェクトを削除する
 
 	DxLib_End();
 

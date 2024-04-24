@@ -15,14 +15,14 @@ public:
 	Player(Vector2D location);
 	~Player();
 
-	void Update();
-	void Draw() const;
+	void Update();		//更新処理
+	void Draw() const;	//描画処理
 
-	void SetLocation(float x, float y);
-	void SetLocation(Vector2D location);
-	Vector2D GetLocation() const;
-	float GetRadius();
+	void SetLocation(float x, float y);		//座標設置
+	void SetLocation(Vector2D location);	//座標設置
+	Vector2D GetLocation() const;			//座標取得
+	float GetRadius();						//大きさ
 
 private:
-	void Movement();
+	void Movement();	//移動処理
 };

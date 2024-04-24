@@ -3,8 +3,11 @@
 #include "Scene/Scene.h"
 
 //メイン関数(プログラムはここから始まります。)
-int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpmdLine, _In_ int nShowCmd)
+int WINAPI WinMain(_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPSTR lpmdLine, 
+	_In_ int nShowCmd
+)
 {
 	//Windowモードで起動
 	ChangeWindowMode(TRUE);
@@ -32,7 +35,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 		scene->Initialize();
 
 		//メインループ(ウィンドウの異常発生 or ESCキーが押されたら、ループ終了)
-		while (ProcessMessage() != -1 && CheckHitKey(KEY_INPUT_ESCAPE) != TRUE)
+		while (ProcessMessage() != -1 && 
+			InputControl::GetKeyUp(KEY_INPUT_ESCAPE) == false)
 		{
 			//入力機能の更新
 			InputControl::Update();
