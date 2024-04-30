@@ -36,7 +36,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,
 
 		//メインループ(ウィンドウの異常発生 or ESCキーが押されたら、ループ終了)
 		while (ProcessMessage() != -1 && 
-			InputControl::GetKeyUp(KEY_INPUT_ESCAPE) == false)
+			InputControl::GetKeyUp(KEY_INPUT_ESCAPE) != TRUE)
 		{
 			//入力機能の更新
 			InputControl::Update();
