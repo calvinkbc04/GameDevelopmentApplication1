@@ -1,10 +1,26 @@
 #include "Enemy.h"
 #include "DxLib.h"
+#include "stdlib.h"
+#include "time.h"
 
 Enemy::Enemy() : animation_count(0), direction(0.0f)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
+	animation[2] = NULL;
+	animation[3] = NULL;
+	animation[4] = NULL;
+
+	for (int i = 0; i < ANIM_MIN; i++)
+	{
+		E_Box[i] = NULL;
+		E_Fly[i] = NULL;
+		E_Harpy[i] = NULL;
+	}
+	for (int i = 0; i < ANIM_MAX; i++)
+	{
+		E_Metal[i] = NULL;
+	}
 }
 
 Enemy::~Enemy()
@@ -15,14 +31,13 @@ Enemy::~Enemy()
 //初期化処理
 void Enemy::Initialize()
 {
-	//画像の読み込み
-	animation[0] = LoadGraph("Resource/Images/E_Box/1.png");
-	animation[1] = LoadGraph("Resource/Images/E_Box/2.png");
+	//画像の読み込み処理
+	LoadImages();
 
 	//エラーチェック
 	if (animation[0] == -1 || animation[1] == -1)
 	{
-		throw("ハコ敵の画像がありません\n");
+		throw("敵の画像がありません\n");
 	}
 
 	//向きの設定
@@ -35,12 +50,13 @@ void Enemy::Initialize()
 	image = animation[0];
 
 	//初期進行方向の設定
-	direction = Vector2D(1.0f, -0.5f);
+	direction = Vector2D(1.0f, -0.0f);
 }
 
 //更新処理
 void Enemy::Update()
 {
+
 	//移動処理
 	Movement();
 
@@ -65,7 +81,7 @@ void Enemy::Draw() const
 	}
 
 	//情報を基にハコ敵画像を描画する
-	DrawRotaGraphF(location.x, location.y, 1.0, image, TRUE, flip_flag);
+	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, flip_flag);
 
 	//親クラスの描画処理を呼び出す
 	__super::Draw();
@@ -74,9 +90,7 @@ void Enemy::Draw() const
 //終了時処理
 void Enemy::Finalize()
 {
-	//使用した画像を解放
-	DeleteGraph(animation[0]);
-	DeleteGraph(animation[1]);
+	UnloadImages();
 }
 
 //当たり判定通知処理
@@ -84,6 +98,8 @@ void Enemy::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
+
+	
 }
 
 //移動処理
@@ -118,14 +134,97 @@ void Enemy::AnimationControl()
 		//カウントのリセット
 		animation_count = 0;
 
-		//画像の
-		if (image == animation[0])
+		//画像の切替
+		if (animation[2] = NULL)
 		{
-			image = animation[1];
+			if (image == animation[0])
+			{
+				image = animation[1];
+			}
+			else
+			{
+				image = animation[0];
+			}
 		}
 		else
 		{
-			image = animation[0];
+			/////////////
 		}
+		
+	}
+}
+
+
+//生成するEnemyを取得する処理
+void Enemy::GetSpawnEnemy()
+{
+	srand((unsigned int)time(NULL));
+	int num = rand() % 4 + 1;
+
+	switch (num)
+	{
+	case 1:
+		animation[0] = E_Box[0];
+		animation[1] = E_Box[1];
+
+	case 2:
+		animation[0] = E_Fly[0];
+		animation[1] = E_Fly[1];
+
+	case 3:
+		animation[0] = E_Harpy[0];
+		animation[1] = E_Harpy[0];
+
+	case 4:
+		animation[0] = E_Metal[0];
+		animation[1] = E_Metal[1];
+		animation[2] = E_Metal[2];
+		animation[3] = E_Metal[3];
+		animation[4] = E_Metal[4];
+	}
+
+	if (num < 4)
+	{
+		animation[2] = NULL;
+		animation[3] = NULL;
+		animation[4] = NULL;
+	}
+	
+}
+
+
+//すべてのEnemyの画像の読み込み
+void Enemy::LoadImages()
+{
+	//ハコテキ
+	E_Box[0] = LoadGraph("Resource/images/E_Box/1.png");
+	E_Box[1] = LoadGraph("Resource/images/E_Box/2.png");
+	//ハネテキ
+	E_Fly[0] = LoadGraph("Resource/images/E_Fly/1.png");
+	E_Fly[1] = LoadGraph("Resource/images/E_Fly/1.png");
+	//金のテキ
+	E_Metal[0] = LoadGraph("Resource/images/E_Metal/1.png");
+	E_Metal[1] = LoadGraph("Resource/images/E_Metal/2.png");
+	E_Metal[2] = LoadGraph("Resource/images/E_Metal/3.png");
+	E_Metal[3] = LoadGraph("Resource/images/E_Metal/4.png");
+	E_Metal[4] = LoadGraph("Resource/images/E_Metal/5.png");
+	//ハーピー
+	E_Harpy[0] = LoadGraph("Resource/images/E_Harpy/1.png");
+	E_Harpy[1] = LoadGraph("Resource/images/E_Harpy/1.png");
+}
+
+
+//すべてのEnemyの画像の削除
+void Enemy::UnloadImages()
+{
+	for (int i = 0; i < ANIM_MIN; i++)
+	{
+		DeleteGraph(E_Box[i]);
+		DeleteGraph(E_Fly[i]);
+		DeleteGraph(E_Harpy[i]);
+	}
+	for (int i = 0; i < ANIM_MAX; i++)
+	{
+		DeleteGraph(E_Metal[i]);
 	}
 }

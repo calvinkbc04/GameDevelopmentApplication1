@@ -30,4 +30,7 @@ public:
 	Vector2D GetLocation() const;
 	//ˆÊ’uî•ñ•ÏXˆ—
 	void SetLocation(const Vector2D& location);
+
+	//“–‚½‚è”»’è‚Ì‘å‚«‚³‚ğæ“¾‚·‚é
+	Vector2D GetBoxSize() const;
 };

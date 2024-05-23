@@ -2,12 +2,23 @@
 
 #include "../GameObject.h"
 
+#define ANIM_MIN (2)
+#define ANIM_MAX (5)
+
 class Enemy : public GameObject
 {
 private:
-	int animation[2];		//アニメーション画像
+	int animation[5];		//アニメーション画像
 	int animation_count;	//アニメーション時間
 	Vector2D direction;		//進行方向
+
+	
+
+	//すべてのEnemyの画像の変数
+	int E_Box[ANIM_MIN];
+	int E_Fly[ANIM_MIN];
+	int E_Metal[ANIM_MAX];
+	int E_Harpy[ANIM_MIN];
 
 public:
 	Enemy();
@@ -21,7 +32,6 @@ public:
 	virtual void Draw() const override;
 	//終了処理
 	virtual void Finalize() override;
-
 	//当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object) override;
 
@@ -30,4 +40,13 @@ private:
 	void Movement();
 	//アニメーション制御
 	void AnimationControl();
+	//生成するEnemyを取得する処理
+	void GetSpawnEnemy();
+
+public:
+	//すべてのEnemyの画像の読み込み処理
+	void LoadImages();
+
+	//すべてのEnemyの画像の削除処理
+	void UnloadImages();
 };

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../../Utility/InputControl.h"
+#include "../../Utility/UserTemplate.h"
 #include "DxLib.h"
 
 //コンストラクタ
@@ -18,21 +19,21 @@ Player::~Player()
 //初期化処理
 void Player::Initialize()
 {
-	//画像の読み込み
+	//画像読み込み
 	animation[0] = LoadGraph("Resource/images/Player/1.png");
 	animation[1] = LoadGraph("Resource/images/Player/2.png");
 
 	//エラーチェック
 	if (animation[0] == -1 || animation[1] == -1)
 	{
-		throw("トリパイロットの画像がありません\n");
+		throw("Playerの画像がありません\n");
 	}
 
 	//向きの設定
-	radian = 0.0;
+	radian = 0.0f;
 
-	//大きさの設定
-	box_size = Vector2D(64.0f);
+	//当たり判定の大きさを設定
+	box_size = 64.0f;
 
 	//初期画像の設定
 	image = animation[0];
@@ -61,6 +62,7 @@ void Player::Draw() const
 
 	DrawBoxAA(ul.x, ul.y, br.x, br.y, GetColor(255, 0, 0), FALSE);
 #endif
+
 }
 
 //終了時処理
@@ -80,7 +82,6 @@ void Player::OnHitCollision(GameObject* hit_object)
 //移動処理
 void Player::Movement()
 {
-	//移動の速さ
 	Vector2D velocity = 0.0f;
 
 	//左右移動
@@ -99,6 +100,18 @@ void Player::Movement()
 		velocity.x += 0.0f;
 	}
 
+	if (location.x < (box_size.x / 2.0f))
+	{
+
+		velocity.x = 0.0f;
+		location.x = box_size.x / 2.0f;
+	}
+	else if ((640.0f - (box_size.x / 2.0f)) < location.x)
+	{
+		velocity.x = 0.0f;
+		location.x = 640.0f - (box_size.x / 2.0f);
+	}
+
 	//現在の位置座標に速さを加算する
 	location += velocity;
 }
@@ -109,7 +122,7 @@ void Player::AnimationControl()
 	//フレームカウントを加算する
 	animation_count++;
 
-	//60フレーム目に到達したら
+	//６０フレーム目に到達したら
 	if (animation_count >= 60)
 	{
 		//カウントのリセット

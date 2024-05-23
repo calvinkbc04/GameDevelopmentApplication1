@@ -33,7 +33,18 @@ void GameObject::Update()
 //•`‰æˆ—
 void GameObject::Draw() const
 {
-	
+	//“–‚½‚è”»’è‚Ì‰ÂŽ‹‰»
+#ifdef D_PIVOT_CENTER
+	Vector2D tl = location - (box_size / 2.0f);
+	Vector2D br = location + (box_size / 2.0f);
+
+	DrawBoxAA(tl.x, tl.y, br.x, br.y, GetColor(255, 0, 0), FALSE);
+#else
+	Vector2D tl = location;
+	Vector2D br = location + box_size;
+
+	DrawBoxAA(tl.x, tl.y, br.x, br.y, GetColor(255, 0, 0), FALSE);
+#endif // D_PIVOT_CENTER
 }
 
 //I—¹Žžˆ—
@@ -51,11 +62,16 @@ void GameObject::OnHitCollision(GameObject* hit_object)
 //ˆÊ’uî•ñŽæ“¾ˆ—
 Vector2D GameObject::GetLocation() const
 {
-	return this->location;
+	return location;
 }
 
 //ˆÊ’uî•ñÝ’èˆ—
 void GameObject::SetLocation(const Vector2D& location)
 {
 	this->location = location;
+}
+
+Vector2D GameObject::GetBoxSize() const
+{
+	return box_size;
 }

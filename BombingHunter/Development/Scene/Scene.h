@@ -19,13 +19,16 @@ public:
 	void Finalize();
 
 private:
+	//当たり判定チェック処理
+	void HitCheckObject(GameObject* a, GameObject* b);
+
 	//オブジェクト生成処理
 	template <class T>
 	T* CreateObject(const Vector2D& location)
 	{
 		//指定したクラスを生成する
 		T* new_instance = new T();
-		//GameObjectクラスを　　しているか確認
+		//GameObjectクラスを継承しているか確認
 		GameObject* new_object = dynamic_cast<GameObject*>(new_instance);
 
 		//エラーチェック
