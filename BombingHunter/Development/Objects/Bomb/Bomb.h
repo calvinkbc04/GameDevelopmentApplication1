@@ -2,16 +2,16 @@
 
 #include "../GameObject.h"
 
-class Player : public GameObject
+
+class Bomb : public GameObject
 {
-private:
 	int animation[2];		//アニメーション画像
 	int animation_count;	//アニメーション時間
 	int flip_flag;			//反転フラグ
 
 public:
-	Player();
-	~Player();
+	Bomb();
+	~Bomb();
 
 	virtual void Initialize() override;		//初期化処理
 	virtual void Update() override;			//更新処理
@@ -20,14 +20,6 @@ public:
 
 	//当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object) override;
-
-	/// /////////////////////////////////////////////////////////////////
-protected:
-	virtual void subMethod() {
-		//型情報の取得
-		const type_info& id = typeid(*this);
-	}
-	/// /////////////////////////////////////////////////////////////////
 
 private:
 	//移動処理

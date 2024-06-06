@@ -4,10 +4,14 @@
 #include <string>
 #include "../Objects/GameObject.h"
 
+#define WINDOW_MAX_WIDTH (960)
+#define WINDOW_MAX_HEIGHT (720)
+
 class Scene
 {
 private:
 	std::vector<GameObject*> objects;
+	int BackgroundImage;
 
 public:
 	Scene();
@@ -38,10 +42,12 @@ private:
 			throw std::string("ゲームオブジェクトが生成されませんでした");
 		}
 
-		//初期化処理
-		new_object->Initialize();
 		//初期情報の設定
 		new_object->SetLocation(location);
+		
+		//初期化処理
+		new_object->Initialize();
+		
 
 		//オブジェクトリストに追加
 		objects.push_back(new_object);

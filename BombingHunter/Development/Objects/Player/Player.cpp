@@ -106,10 +106,10 @@ void Player::Movement()
 		velocity.x = 0.0f;
 		location.x = box_size.x / 2.0f;
 	}
-	else if ((640.0f - (box_size.x / 2.0f)) < location.x)
+	else if ((960.0f - (box_size.x / 2.0f)) < location.x)
 	{
 		velocity.x = 0.0f;
-		location.x = 640.0f - (box_size.x / 2.0f);
+		location.x = 960.0f - (box_size.x / 2.0f);
 	}
 
 	//現在の位置座標に速さを加算する
@@ -123,7 +123,7 @@ void Player::AnimationControl()
 	animation_count++;
 
 	//６０フレーム目に到達したら
-	if (animation_count >= 60)
+	if (animation_count >= 10)
 	{
 		//カウントのリセット
 		animation_count = 0;

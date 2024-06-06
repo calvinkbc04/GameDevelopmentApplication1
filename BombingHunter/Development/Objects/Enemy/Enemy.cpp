@@ -3,23 +3,21 @@
 #include "stdlib.h"
 #include "time.h"
 
-Enemy::Enemy() : animation_count(0), direction(0.0f)
-{
-	animation[0] = NULL;
-	animation[1] = NULL;
-	animation[2] = NULL;
-	animation[3] = NULL;
-	animation[4] = NULL;
 
+Enemy::Enemy() : animation_count(0), image_num(0), direction(0.0f)
+{
+	//animation配列とE_Metal配列の初期化
+	for (int i = 0; i < ANIM_MAX; i++)
+	{
+		animation[i] = NULL;
+		E_Metal[i] = NULL;
+	}
+	//列が２ある配列の初期化
 	for (int i = 0; i < ANIM_MIN; i++)
 	{
 		E_Box[i] = NULL;
 		E_Fly[i] = NULL;
-		E_Harpy[i] = NULL;
-	}
-	for (int i = 0; i < ANIM_MAX; i++)
-	{
-		E_Metal[i] = NULL;
+		Harpy[i] = NULL;
 	}
 }
 
@@ -45,6 +43,8 @@ void Enemy::Initialize()
 
 	//当たり判定の大きさを設定
 	box_size = 64.0f;
+
+	GetSpawnEnemy();
 
 	//初期画像の設定
 	image = animation[0];
@@ -98,8 +98,6 @@ void Enemy::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
-
-	
 }
 
 //移動処理
@@ -107,7 +105,7 @@ void Enemy::Movement()
 {
 	//画面端に到達したら、進行方向を反転する
 	if (((location.x + direction.x) < box_size.x) ||
-		(640.0f - box_size.x) < (location.x + direction.x))
+		(940.0f - box_size.x) < (location.x + direction.x))
 	{
 		direction.x *= -1.0f;
 	}
@@ -122,6 +120,7 @@ void Enemy::Movement()
 	location += direction;
 }
 
+
 //アニメーション制御
 void Enemy::AnimationControl()
 {
@@ -135,7 +134,8 @@ void Enemy::AnimationControl()
 		animation_count = 0;
 
 		//画像の切替
-		if (animation[2] = NULL)
+		//画像が2枚しかない場合
+		if (animation[2] == NULL)
 		{
 			if (image == animation[0])
 			{
@@ -148,9 +148,17 @@ void Enemy::AnimationControl()
 		}
 		else
 		{
-			/////////////
-		}
-		
+			image_num++;
+			
+			if (image_num > 4)
+			{
+				image_num = 0;
+			}
+			else
+			{
+				image = animation[image_num];
+			}
+		}	
 	}
 }
 
@@ -158,39 +166,43 @@ void Enemy::AnimationControl()
 //生成するEnemyを取得する処理
 void Enemy::GetSpawnEnemy()
 {
-	srand((unsigned int)time(NULL));
-	int num = rand() % 4 + 1;
+	animation[2] = NULL;
+	animation[3] = NULL;
+	animation[4] = NULL;
 
-	switch (num)
+	if (this->location.y == 200)	//200 -> FLY_PATH_1
 	{
-	case 1:
-		animation[0] = E_Box[0];
-		animation[1] = E_Box[1];
-
-	case 2:
 		animation[0] = E_Fly[0];
 		animation[1] = E_Fly[1];
-
-	case 3:
-		animation[0] = E_Harpy[0];
-		animation[1] = E_Harpy[0];
-
-	case 4:
-		animation[0] = E_Metal[0];
-		animation[1] = E_Metal[1];
-		animation[2] = E_Metal[2];
-		animation[3] = E_Metal[3];
-		animation[4] = E_Metal[4];
 	}
-
-	if (num < 4)
+	else if (this->location.y == FLY_PATH_2)
 	{
-		animation[2] = NULL;
-		animation[3] = NULL;
-		animation[4] = NULL;
+		animation[0] = Harpy[0];
+		animation[1] = Harpy[1];
 	}
-	
+	else
+	{
+		srand((unsigned int)time(NULL));
+		int num = rand() % 2 + 1;
+
+		switch (num)
+		{
+		case 1:
+			animation[0] = E_Box[0];
+			animation[1] = E_Box[1];
+			break;
+
+		case 2:
+			animation[0] = E_Metal[0];
+			animation[1] = E_Metal[1];
+			animation[2] = E_Metal[2];
+			animation[3] = E_Metal[3];
+			animation[4] = E_Metal[4];
+			break;
+		}
+	}
 }
+
 
 
 //すべてのEnemyの画像の読み込み
@@ -201,7 +213,7 @@ void Enemy::LoadImages()
 	E_Box[1] = LoadGraph("Resource/images/E_Box/2.png");
 	//ハネテキ
 	E_Fly[0] = LoadGraph("Resource/images/E_Fly/1.png");
-	E_Fly[1] = LoadGraph("Resource/images/E_Fly/1.png");
+	E_Fly[1] = LoadGraph("Resource/images/E_Fly/2.png");
 	//金のテキ
 	E_Metal[0] = LoadGraph("Resource/images/E_Metal/1.png");
 	E_Metal[1] = LoadGraph("Resource/images/E_Metal/2.png");
@@ -209,8 +221,8 @@ void Enemy::LoadImages()
 	E_Metal[3] = LoadGraph("Resource/images/E_Metal/4.png");
 	E_Metal[4] = LoadGraph("Resource/images/E_Metal/5.png");
 	//ハーピー
-	E_Harpy[0] = LoadGraph("Resource/images/E_Harpy/1.png");
-	E_Harpy[1] = LoadGraph("Resource/images/E_Harpy/1.png");
+	Harpy[0] = LoadGraph("Resource/images/Harpy/1.png");
+	Harpy[1] = LoadGraph("Resource/images/Harpy/2.png");
 }
 
 
@@ -221,7 +233,7 @@ void Enemy::UnloadImages()
 	{
 		DeleteGraph(E_Box[i]);
 		DeleteGraph(E_Fly[i]);
-		DeleteGraph(E_Harpy[i]);
+		DeleteGraph(Harpy[i]);
 	}
 	for (int i = 0; i < ANIM_MAX; i++)
 	{
