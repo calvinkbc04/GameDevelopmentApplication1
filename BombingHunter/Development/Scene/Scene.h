@@ -12,6 +12,8 @@ class Scene
 private:
 	std::vector<GameObject*> objects;
 	int BackgroundImage;
+	float PLocX;
+	float PLocY;
 
 public:
 	Scene();

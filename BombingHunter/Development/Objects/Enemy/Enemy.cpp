@@ -170,7 +170,7 @@ void Enemy::GetSpawnEnemy()
 	animation[3] = NULL;
 	animation[4] = NULL;
 
-	if (this->location.y == 200)	//200 -> FLY_PATH_1
+	if (this->location.y == FLY_PATH_1)
 	{
 		animation[0] = E_Fly[0];
 		animation[1] = E_Fly[1];

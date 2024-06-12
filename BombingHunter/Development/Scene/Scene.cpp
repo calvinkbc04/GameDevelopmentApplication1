@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../Objects/Player/Player.h"
 #include "../Objects/Enemy/Enemy.h"
+#include "../Objects/Bomb/Bomb.h"
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 #include "stdlib.h"
@@ -9,7 +10,7 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects(), BackgroundImage(NULL)
+Scene::Scene() : objects(), BackgroundImage(NULL), PLocX(NULL), PLocY(NULL)
 {
 
 }
@@ -26,7 +27,6 @@ void Scene::Initialize()
 {
 	//プレイヤーを生成する
 	CreateObject<Player>(Vector2D(320.0f, 200.0f));
-	CreateObject<Enemy>(Vector2D(100.0f, 200.0f));////////////////////////////////////////////////
 
 	BackgroundImage = LoadGraph("Resource/images/Background2.png");
 
@@ -34,7 +34,6 @@ void Scene::Initialize()
 	{
 		throw("背景の画像がありません\n");
 	}
-
 }
 
 //更新処理
@@ -70,7 +69,7 @@ void Scene::Update()
 			break;
 
 		case 2:
-			CreateObject<Enemy>(Vector2D(100.0f, 200));	//200 -> FLY_PATH_1
+			CreateObject<Enemy>(Vector2D(100.0f, FLY_PATH_1));
 			break;
 
 		case 3:
@@ -81,6 +80,16 @@ void Scene::Update()
 			CreateObject<Enemy>(Vector2D(100.0f, FLOOR_PATH));
 			break;
 		}
+	}
+
+	//プレイヤーの座標取得
+	PLocX = objects[0]->GetLocation().x;
+	PLocY = objects[0]->GetLocation().y + 65.0f;
+
+	//スペースキーが押されたら、ボム生成処理を行う
+	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
+	{
+		CreateObject<Bomb>(Vector2D(PLocX, PLocY));
 	}
 }
 
@@ -124,14 +133,8 @@ void Scene::Finalize()
 //当たり判定チェック処理（矩形の中心で当たり判定を取る）
 void Scene::HitCheckObject(GameObject* a, GameObject* b)
 {
-	///////////////////////////////////////////////////////////////////////
-	const type_info& id_1 = typeid(a);
-	const type_info& id_2 = typeid(b);
-	///////////////////////////////////////////////////////////////////////
-	
-	
 	//同じオブジェクト同士か確認
-	if (id_1 == id_2)	//a == b
+	if (a == b)
 	{
 		return;
 	}

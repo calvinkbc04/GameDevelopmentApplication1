@@ -5,9 +5,10 @@
 
 class Bomb : public GameObject
 {
-	int animation[2];		//アニメーション画像
+	int animation[4];		//アニメーション画像
 	int animation_count;	//アニメーション時間
 	int flip_flag;			//反転フラグ
+	Vector2D direction;		//進行方向
 
 public:
 	Bomb();
@@ -26,4 +27,12 @@ private:
 	void Movement();
 	//アニメーション制御
 	void AnimationControl();
+
+public:
+
+	//すべてのEnemyの画像の読み込み処理
+	void LoadImages();
+
+	//すべてのEnemyの画像の削除処理
+	void UnloadImages();
 };

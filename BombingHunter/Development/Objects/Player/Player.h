@@ -21,14 +21,6 @@ public:
 	//“–‚½‚è”»’è’Ê’mˆ—
 	virtual void OnHitCollision(GameObject* hit_object) override;
 
-	/// /////////////////////////////////////////////////////////////////
-protected:
-	virtual void subMethod() {
-		//Œ^î•ñ‚Ìæ“¾
-		const type_info& id = typeid(*this);
-	}
-	/// /////////////////////////////////////////////////////////////////
-
 private:
 	//ˆÚ“®ˆ—
 	void Movement();

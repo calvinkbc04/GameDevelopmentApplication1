@@ -16,8 +16,6 @@ private:
 	int image_num;			//—”‚ğŠ‚·‚é•Ï”
 	Vector2D direction;		//is•ûŒü
 
-	
-
 	//‚·‚×‚Ä‚ÌEnemy‚Ì‰æ‘œ‚Ì•Ï”
 	int E_Box[ANIM_MIN];
 	int E_Fly[ANIM_MIN];
@@ -46,15 +44,6 @@ private:
 	void AnimationControl();
 	//¶¬‚·‚éEnemy‚ğæ“¾‚·‚éˆ—
 	void GetSpawnEnemy();
-
-
-/// /////////////////////////////////////////////////////////////////
-protected:
-	virtual void subMethod() {
-		//Œ^î•ñ‚Ìæ“¾
-		const type_info& id = typeid(*this);
-	}
-/// /////////////////////////////////////////////////////////////////
 
 public:
 
