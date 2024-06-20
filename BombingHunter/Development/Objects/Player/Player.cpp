@@ -19,6 +19,8 @@ Player::~Player()
 //‰Šú‰»ˆ—
 void Player::Initialize()
 {
+	type = 0.0f;
+
 	//‰æ‘œ“Ç‚İ‚İ
 	animation[0] = LoadGraph("Resource/images/Player/1.png");
 	animation[1] = LoadGraph("Resource/images/Player/2.png");
@@ -82,7 +84,7 @@ void Player::OnHitCollision(GameObject* hit_object)
 //ˆÚ“®ˆ—
 void Player::Movement()
 {
-	Vector2D velocity = 0.0f;
+	velocity = 0.0f;
 
 	//¶‰EˆÚ“®
 	if (InputControl::GetKey(KEY_INPUT_LEFT))

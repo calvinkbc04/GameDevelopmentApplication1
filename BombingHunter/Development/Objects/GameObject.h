@@ -13,6 +13,7 @@ protected:
 	double radian;		//向き
 	int image;			//描画する画像
 	int sound;			//再生する画像
+	float type;			//オブジェクトタイプ
 
 public:
 	GameObject();
@@ -32,4 +33,6 @@ public:
 	void SetLocation(const Vector2D& location);
 	//当たり判定の大きさを取得する
 	Vector2D GetBoxSize() const;
+	//オブジェクトタイプを取得する処理
+	float GetObjectType() const;
 };

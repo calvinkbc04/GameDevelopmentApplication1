@@ -4,16 +4,18 @@
 #include <string>
 #include "../Objects/GameObject.h"
 
-#define WINDOW_MAX_WIDTH (960)
-#define WINDOW_MAX_HEIGHT (720)
+#define WINDOW_MAX_WIDTH (960)	//横画面サイズ
+#define WINDOW_MAX_HEIGHT (720)	//縦画面サイズ
 
 class Scene
 {
 private:
 	std::vector<GameObject*> objects;
-	int BackgroundImage;
-	float PLocX;
-	float PLocY;
+	int BackgroundImage;	//背景画像
+	float PLocX;	//プレイヤーのx座標を取得する変数
+	float PLocY;	//プレイヤーのy座標を取得する変数
+	float ELocX;	//敵のx座標を取得する変数
+	float ELocY;	//敵のy座標を取得する変数
 
 public:
 	Scene();

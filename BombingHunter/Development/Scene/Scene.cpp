@@ -2,6 +2,7 @@
 #include "../Objects/Player/Player.h"
 #include "../Objects/Enemy/Enemy.h"
 #include "../Objects/Bomb/Bomb.h"
+#include "../Objects/Bullet/Bullet.h"
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 #include "stdlib.h"
@@ -10,7 +11,7 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects(), BackgroundImage(NULL), PLocX(NULL), PLocY(NULL)
+Scene::Scene() : objects(), BackgroundImage(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL)
 {
 
 }
@@ -60,37 +61,80 @@ void Scene::Update()
 	{
 		//ランダムの数値を出す
 		srand((unsigned int)time(NULL));
-		int num = rand() % 4 + 1;
+		int enemy_type = rand() % 4 + 1;
+		int spawn_side = rand() % 2 + 1;
 
-		switch (num)
+		switch (enemy_type)
 		{
 		case 1:
-			CreateObject<Enemy>(Vector2D(100.0f, FLOOR_PATH));
+			if (spawn_side == 1)
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_LEFT, FLOOR_PATH));
+			}
+			else
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_RIGHT, FLOOR_PATH));
+			}
 			break;
 
 		case 2:
-			CreateObject<Enemy>(Vector2D(100.0f, FLY_PATH_1));
+			if (spawn_side == 1)
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_LEFT, FLY_PATH_1));
+			}
+			else
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_RIGHT, FLY_PATH_1));
+			}
 			break;
 
 		case 3:
-			CreateObject<Enemy>(Vector2D(100.0f, FLY_PATH_2));
+			if (spawn_side == 1)
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_LEFT, FLY_PATH_2));
+			}
+			else
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_RIGHT, FLY_PATH_2));
+			}
 			break;
 
 		case 4:
-			CreateObject<Enemy>(Vector2D(100.0f, FLOOR_PATH));
+			if (spawn_side == 1)
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_LEFT, FLOOR_PATH));
+			}
+			else
+			{
+				CreateObject<Enemy>(Vector2D(SPAWN_RIGHT, FLOOR_PATH));
+			}
 			break;
 		}
 	}
 
 	//プレイヤーの座標取得
 	PLocX = objects[0]->GetLocation().x;
-	PLocY = objects[0]->GetLocation().y + 65.0f;
+	PLocY = objects[0]->GetLocation().y + 32.0f; // <----- "+ 32.0f" は爆弾がプレイヤーの下から出るよるためのオフセット
 
 	//スペースキーが押されたら、ボム生成処理を行う
 	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
 		CreateObject<Bomb>(Vector2D(PLocX, PLocY));
 	}
+
+	for (int i = 1; i < objects.size(); i++)
+	{
+		if (objects[i]->GetObjectType() == 1.0)
+		{
+			ELocX = objects[i]->GetLocation().x;
+			ELocY = objects[i]->GetLocation().y;
+		}
+		else
+		{
+			return;
+		}
+	}
+
 }
 
 //描画処理
@@ -133,8 +177,23 @@ void Scene::Finalize()
 //当たり判定チェック処理（矩形の中心で当たり判定を取る）
 void Scene::HitCheckObject(GameObject* a, GameObject* b)
 {
-	//同じオブジェクト同士か確認
-	if (a == b)
+	/* type: Player = 0.0f, Enemy = 1.0f, Bomb = 2.0f, Bullet = 3.0f  */
+
+	float aType = a->GetObjectType();
+	float bType = b->GetObjectType();
+
+	//同じオブジェクト同士であれば無視する
+	if (aType == bType)
+	{
+		return;
+	}
+	//aTypeがプレイヤーでbTypeが爆弾だった場合,無視する
+	else if (aType == 0.0f && bType == 2.0f || aType == 2.0f && bType == 0.0f)
+	{
+		return;
+	}
+	//aTypeが敵でbTypeが弾だった場合,無視する
+	else if (aType == 1.0f && bType == 3.0f || aType == 3.0f && bType == 1.0f)
 	{
 		return;
 	}
@@ -154,32 +213,6 @@ void Scene::HitCheckObject(GameObject* a, GameObject* b)
 			b->OnHitCollision(a);
 		}
 	}
-	
-	
-	/****************************************************************************************************************************/
-
-	////２つのオブジェクトの距離を取得
-	//Vector2D diff = a->GetLocation() - b->GetLocation();
-
-	////２つのオブジェクトの当たり判定の大きさを取得
-	//Vector2D box_size = (a->GetBoxSize() + b->GetBoxSize()) / 2.0f;
-
-
-	//if (a == b)
-	//{
-	//	return;
-	//}
-	//else
-	//{
-	//	//距離より大きさが大きい場合、Hit判定とする
-	//	if ((fabsf(diff.x) < box_size.x) && (fabsf(diff.y) < box_size.y))
-	//	{
-	//		//当たったことをオブジェクトに通知する
-	//		a->OnHitCollision(b);
-	//		b->OnHitCollision(a);
-	//	}
-	//}
-
 }
 
 #else

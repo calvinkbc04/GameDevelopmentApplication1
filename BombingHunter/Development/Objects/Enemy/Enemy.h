@@ -7,6 +7,8 @@
 #define FLOOR_PATH (600.0f)		//床のｙ位置座標
 #define FLY_PATH_1 (300.0f)		//飛ぶ敵のｙ位置座標１
 #define FLY_PATH_2 (450.0f)		//飛ぶ敵のｙ位置座標２
+#define SPAWN_LEFT (100.0f)		//敵が画面左側から生成する位置座標
+#define SPAWN_RIGHT (870.0f)	//敵が画面右側から生成する位置座標
 
 class Enemy : public GameObject
 {
@@ -44,12 +46,11 @@ private:
 	void AnimationControl();
 	//生成するEnemyを取得する処理
 	void GetSpawnEnemy();
-
-public:
+	
+private:
 
 	//すべてのEnemyの画像の読み込み処理
 	void LoadImages();
-
 	//すべてのEnemyの画像の削除処理
 	void UnloadImages();
 };

@@ -1,5 +1,7 @@
 #include "Bomb.h"
 #include "DxLib.h"
+#include "../../Utility/InputControl.h"
+#include "../../Objects/Player/Player.h"
 
 //コンストラクタ
 Bomb::Bomb() : animation_count(0), flip_flag(FALSE)
@@ -18,6 +20,8 @@ Bomb::~Bomb()
 
 void Bomb::Initialize()
 {
+	type = 2.0f;
+
 	//画像読み込み
 	LoadImages();
 
@@ -35,6 +39,9 @@ void Bomb::Initialize()
 
 	//初期画像の設定
 	image = animation[0];
+
+	//初期進行方向の設定
+	direction = Vector2D(0.0f, 1.0f);
 }
 
 //更新処理
@@ -53,7 +60,7 @@ void Bomb::Draw() const
 {
 	//画像反転フラグ
 	int flip_flag = FALSE;
-
+	
 	//進行方向によって、反転状態を決定する
 	if (direction.x > 0.0f)
 	{
@@ -64,8 +71,8 @@ void Bomb::Draw() const
 		flip_flag = TRUE;
 	}
 
-	//情報を基にハコ敵画像を描画する
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, flip_flag);
+	//情報を基に画像を描画する
+	DrawRotaGraphF(location.x, location.y, 1.0, radian, animation[0], TRUE, flip_flag);
 
 	//親クラスの描画処理を呼び出す
 	__super::Draw();
@@ -84,20 +91,19 @@ void Bomb::OnHitCollision(GameObject* hit_object)
 	direction = 0.0f;
 }
 
+//オブジェクトタイプを取得する処理
+float Bomb::GetObjectType()
+{
+	return type;
+}
+
 //移動処理
 void Bomb::Movement()
 {
-	//画面端に到達したら、進行方向を反転する
-	if (((location.x + direction.x) < box_size.x) ||
-		(940.0f - box_size.x) < (location.x + direction.x))
-	{
-		direction.x *= -1.0f;
-	}
-
 	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
+		(680.0f - box_size.y) < (location.y + direction.y))
 	{
-		direction.y *= -1.0f;
+		direction = 0.0f;
 	}
 
 	//進行方向に向かって、位置座標を変更する
