@@ -10,10 +10,12 @@ class GameObject
 protected:
 	Vector2D location;	//位置情報
 	Vector2D box_size;		//大きさ
+	Vector2D direction;
 	double radian;		//向き
 	int image;			//描画する画像
 	int sound;			//再生する画像
 	float type;			//オブジェクトタイプ
+	bool active_state;
 
 public:
 	GameObject();
@@ -35,4 +37,8 @@ public:
 	Vector2D GetBoxSize() const;
 	//オブジェクトタイプを取得する処理
 	float GetObjectType() const;
+	//オブジェクトが存在しているかを確認する処理
+	virtual bool GetActive();
+
+	virtual Vector2D GetDirection();
 };

@@ -21,6 +21,8 @@ void Player::Initialize()
 {
 	type = 0.0f;
 
+	active_state = true;
+
 	//画像読み込み
 	animation[0] = LoadGraph("Resource/images/Player/1.png");
 	animation[1] = LoadGraph("Resource/images/Player/2.png");
@@ -89,12 +91,12 @@ void Player::Movement()
 	//左右移動
 	if (InputControl::GetKey(KEY_INPUT_LEFT))
 	{
-		velocity.x += -1.0f;
+		velocity.x += -2.0f;
 		flip_flag = TRUE;
 	}
 	else if (InputControl::GetKey(KEY_INPUT_RIGHT))
 	{
-		velocity.x += 1.0f;
+		velocity.x += 2.0f;
 		flip_flag = FALSE;
 	}
 	else
@@ -104,7 +106,6 @@ void Player::Movement()
 
 	if (location.x < (box_size.x / 2.0f))
 	{
-
 		velocity.x = 0.0f;
 		location.x = box_size.x / 2.0f;
 	}
@@ -125,7 +126,7 @@ void Player::AnimationControl()
 	animation_count++;
 
 	//６０フレーム目に到達したら
-	if (animation_count >= 10)
+	if (animation_count >= 30)
 	{
 		//カウントのリセット
 		animation_count = 0;
@@ -140,4 +141,9 @@ void Player::AnimationControl()
 			image = animation[0];
 		}
 	}
+}
+
+Vector2D Player::GetDirection()
+{
+	return velocity;
 }

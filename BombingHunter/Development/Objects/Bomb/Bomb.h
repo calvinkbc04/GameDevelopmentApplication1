@@ -21,8 +21,8 @@ public:
 
 	//当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object) override;
-	//オブジェクトタイプを取得する処理
-	float GetObjectType();
+
+	Vector2D SetDirection(Vector2D p_velocity);
 
 private:
 	//移動処理

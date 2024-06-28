@@ -1,4 +1,6 @@
 #include "Bullet.h"
+#include "../Player/Player.h"
+#include "../Enemy/Enemy.h"
 #include "DxLib.h"
 
 //コンストラクタ
@@ -20,6 +22,8 @@ void Bullet::Initialize()
 {
 	type = 3.0f;
 
+	active_state = true;
+
 	//画像読み込み
 	LoadImages();
 
@@ -33,12 +37,12 @@ void Bullet::Initialize()
 	radian = 0.0f;
 
 	//当たり判定の大きさを設定
-	box_size = 64.0f;
+	box_size = 32.0f;
 
 	//初期画像の設定
 	image = animation[0];
 
-	direction = Vector2D(0.0f, -1.0f);
+	direction = Vector2D(-0.0f, -1.0f);
 }
 
 //更新処理
@@ -51,7 +55,6 @@ void Bullet::Update()
 	//アニメーション制御
 	AnimationControl();
 
-	CheckTypeAndFrameCnt();
 }
 
 //描画処理
@@ -87,13 +90,7 @@ void Bullet::Finalize()
 void Bullet::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
-	direction = 0.0f;
-}
-
-//オブジェクトタイプを取得する処理
-float Bullet::GetObjectType()
-{
-	return type;
+	active_state = false;
 }
 
 //移動処理
@@ -104,12 +101,14 @@ void Bullet::Movement()
 		(940.0f - box_size.x) < (location.x + direction.x))
 	{
 		direction.x *= -1.0f;
+		active_state = false;
 	}
 
 	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
+		(720.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction.y *= -1.0f;
+		active_state = false;
 	}
 
 	//進行方向に向かって、位置座標を変更する
@@ -150,27 +149,11 @@ void Bullet::LoadImages()
 	animation[3] = LoadGraph("Resource/images/Bullet/png3.png");
 }
 
-//すべてのボムの画像の削除
+//すべての弾の画像の削除
 void Bullet::UnloadImages()
 {
 	DeleteGraph(animation[0]);
 	DeleteGraph(animation[1]);
 	DeleteGraph(animation[2]);
 	DeleteGraph(animation[3]);
-}
-
-bool Bullet::CheckTypeAndFrameCnt()
-{
-	bullet_rate++;
-
-	if (bullet_rate >= 60)
-	{
-		bullet_rate = 0;
-
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
 }

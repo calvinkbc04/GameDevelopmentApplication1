@@ -22,6 +22,8 @@ void Bomb::Initialize()
 {
 	type = 2.0f;
 
+	active_state = true;
+
 	//画像読み込み
 	LoadImages();
 
@@ -40,8 +42,7 @@ void Bomb::Initialize()
 	//初期画像の設定
 	image = animation[0];
 
-	//初期進行方向の設定
-	direction = Vector2D(0.0f, 1.0f);
+
 }
 
 //更新処理
@@ -88,13 +89,26 @@ void Bomb::Finalize()
 void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
-	direction = 0.0f;
+	active_state = false;
 }
 
-//オブジェクトタイプを取得する処理
-float Bomb::GetObjectType()
+
+Vector2D Bomb::SetDirection(Vector2D p_velocity)
 {
-	return type;
+	if (p_velocity.x > 0.0)
+	{
+		direction = Vector2D(5.0f, 0.5f);
+	}
+	else if (p_velocity.x < 0.0)
+	{
+		direction = Vector2D(-5.0f, 0.5f);
+	}
+	else
+	{
+		direction = Vector2D(0.0f, 2.0f);
+	}
+
+	return direction;
 }
 
 //移動処理
@@ -104,9 +118,11 @@ void Bomb::Movement()
 		(680.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction = 0.0f;
+		active_state = false;
 	}
 
 	//進行方向に向かって、位置座標を変更する
+	direction.y += 0.2f;
 	location += direction;
 }
 

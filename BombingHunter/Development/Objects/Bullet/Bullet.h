@@ -22,8 +22,6 @@ public:
 
 	//当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object) override;
-	//オブジェクトタイプを取得する処理
-	float GetObjectType();
 
 private:
 	//移動処理
@@ -37,8 +35,4 @@ private:
 	void LoadImages();
 	//すべてのEnemyの画像の削除処理
 	void UnloadImages();
-
-public:
-
-	bool CheckTypeAndFrameCnt();
 };

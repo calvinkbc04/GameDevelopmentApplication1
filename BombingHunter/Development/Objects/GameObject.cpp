@@ -5,10 +5,12 @@
 GameObject::GameObject() :
 	location(0.0f),
 	box_size(0.0),
+	direction(0.0),
 	radian(0.0),
 	image(0),
 	sound(0),
-	type(0.0f)
+	type(0.0f),
+	active_state(true)
 {
 
 }
@@ -82,4 +84,15 @@ Vector2D GameObject::GetBoxSize() const
 float GameObject::GetObjectType() const
 {
 	return type;
+}
+
+//オブジェクトが存在しているかを確認する処理
+bool GameObject::GetActive()
+{
+	return active_state;
+}
+
+Vector2D GameObject::GetDirection()
+{
+	return direction;
 }

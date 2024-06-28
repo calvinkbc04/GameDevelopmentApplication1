@@ -16,6 +16,8 @@ private:
 	float PLocY;	//プレイヤーのy座標を取得する変数
 	float ELocX;	//敵のx座標を取得する変数
 	float ELocY;	//敵のy座標を取得する変数
+	int enemy_spawn_rate;	//敵が生成するまでのフレームを数える変数
+	int bullet_spawn_rate;	//弾が生成するまでのフレームを数える変数
 
 public:
 	Scene();
@@ -25,6 +27,19 @@ public:
 	void Update();
 	void Draw() const;
 	void Finalize();
+
+	//ランダムな数値を生成する処理
+	int CreateRandNum(int r_num);
+
+	//敵を生成する処理
+	void EnemySpawn();
+	//ボムを生成する処理
+	void BombSpawn();
+	//弾を生成する処理
+	void BulletSpawn();
+	//オブジェクトを削除する処理
+	void DeleteObject();
+	
 
 private:
 	//当たり判定チェック処理

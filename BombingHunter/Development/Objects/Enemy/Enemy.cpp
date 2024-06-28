@@ -35,6 +35,8 @@ void Enemy::Initialize()
 
 	type = 1.0f;
 
+	active_state = true;
+
 	//エラーチェック
 	if (animation[0] == -1 || animation[1] == -1)
 	{
@@ -108,7 +110,7 @@ void Enemy::Finalize()
 void Enemy::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
-	direction = 0.0f;
+	active_state = false;
 }
 
 //移動処理
@@ -122,7 +124,7 @@ void Enemy::Movement()
 	}
 
 	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
+		(720.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction.y *= -1.0f;
 	}
