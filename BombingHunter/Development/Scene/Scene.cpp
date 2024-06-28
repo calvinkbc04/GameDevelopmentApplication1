@@ -11,7 +11,7 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects(), BackgroundImage(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0)
+Scene::Scene() : objects(), BackgroundImage(NULL), BackgroundMusic(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0)
 {
 
 }
@@ -29,11 +29,19 @@ void Scene::Initialize()
 	//プレイヤーを生成する
 	CreateObject<Player>(Vector2D(320.0f, 200.0f));
 
+	//背景画像
 	BackgroundImage = LoadGraph("Resource/images/Background2.png");
+	//背景音楽
+	BackgroundMusic = PlaySoundFile("Resource/audio/BGM_arrows.wav", DX_PLAYTYPE_BACK);
 
 	if (BackgroundImage == -1)
 	{
 		throw("背景の画像がありません\n");
+	}
+
+	if (CheckSoundFile() == -1)
+	{
+		throw("背景の音楽がありません\n");
 	}
 }
 

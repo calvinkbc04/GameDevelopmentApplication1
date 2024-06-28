@@ -12,6 +12,7 @@ class Scene
 private:
 	std::vector<GameObject*> objects;
 	int BackgroundImage;	//背景画像
+	int BackgroundMusic;	//背景音楽
 	float PLocX;	//プレイヤーのx座標を取得する変数
 	float PLocY;	//プレイヤーのy座標を取得する変数
 	float ELocX;	//敵のx座標を取得する変数

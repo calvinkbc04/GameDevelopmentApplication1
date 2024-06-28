@@ -1,8 +1,8 @@
-#pragma once
-
+//#pragma once
+//
 //class Explosion
 //{
-//	int animation[4];		//アニメーション画像
+//	int animation[3];		//アニメーション画像
 //	int animation_count;	//アニメーション時間
 //
 //public:
