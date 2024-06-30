@@ -90,6 +90,8 @@ void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	active_state = false;
+
+	PlaySoundFile("Resource/audio/explosion.wav", DX_PLAYTYPE_BACK);
 }
 
 
@@ -119,6 +121,7 @@ void Bomb::Movement()
 	{
 		direction = 0.0f;
 		active_state = false;
+		PlaySoundFile("Resource/audio/explosion.wav", DX_PLAYTYPE_BACK);
 	}
 
 	//進行方向に向かって、位置座標を変更する

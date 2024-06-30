@@ -21,7 +21,7 @@ public:
 
 	//当たり判定通知処理
 	virtual void OnHitCollision(GameObject* hit_object) override;
-
+	//プレイヤーの進行方向を取得し爆弾の進行方向を決める
 	Vector2D SetDirection(Vector2D p_velocity);
 
 private:

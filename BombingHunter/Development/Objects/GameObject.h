@@ -40,5 +40,6 @@ public:
 	//オブジェクトが存在しているかを確認する処理
 	virtual bool GetActive();
 
+	//オブジェクトの進行方向を取得
 	virtual Vector2D GetDirection();
 };

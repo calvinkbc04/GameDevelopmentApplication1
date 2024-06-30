@@ -92,6 +92,7 @@ bool GameObject::GetActive()
 	return active_state;
 }
 
+//オブジェクトの進行方向を取得
 Vector2D GameObject::GetDirection()
 {
 	return direction;

@@ -11,7 +11,7 @@
 #define D_PIVOT_CENTER
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-Scene::Scene() : objects(), BackgroundImage(NULL), BackgroundMusic(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0)
+Scene::Scene() : objects(), BackgroundImage(NULL), BackgroundMusic(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0), BombCount(0)
 {
 
 }
@@ -32,14 +32,15 @@ void Scene::Initialize()
 	//”wŒi‰æ‘œ
 	BackgroundImage = LoadGraph("Resource/images/Background2.png");
 	//”wŒi‰¹Šy
-	BackgroundMusic = PlaySoundFile("Resource/audio/BGM_arrows.wav", DX_PLAYTYPE_BACK);
+	BackgroundMusic = LoadSoundMem("Resource/audio/BGM_arrows.wav");
+	PlaySoundMem(BackgroundMusic, DX_PLAYTYPE_LOOP, TRUE);
 
 	if (BackgroundImage == -1)
 	{
 		throw("”wŒi‚Ì‰æ‘œ‚ª‚ ‚è‚Ü‚¹‚ñ\n");
 	}
 
-	if (CheckSoundFile() == -1)
+	if (CheckSoundMem(BackgroundMusic) == -1)
 	{
 		throw("”wŒi‚Ì‰¹Šy‚ª‚ ‚è‚Ü‚¹‚ñ\n");
 	}
@@ -85,7 +86,7 @@ void Scene::Update()
 
 	bullet_spawn_rate++;
 
-	if (bullet_spawn_rate == 30)
+	if (bullet_spawn_rate == 30) // <----- "bullet_spawn_rate >= ()" ‚Í“G‚Ì¶¬‘¬“x
 	{
 		bullet_spawn_rate = 0;
 

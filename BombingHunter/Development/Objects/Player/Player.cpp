@@ -143,6 +143,7 @@ void Player::AnimationControl()
 	}
 }
 
+//オブジェクトの進行方向を取得
 Vector2D Player::GetDirection()
 {
 	return velocity;
