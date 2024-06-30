@@ -11,7 +11,7 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects(), BackgroundImage(NULL), BackgroundMusic(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0), BombCount(0)
+Scene::Scene() : objects(), BackgroundImage(NULL), BackgroundMusic(NULL), PLocX(NULL), PLocY(NULL), ELocX(NULL), ELocY(NULL), enemy_spawn_rate(0), bullet_spawn_rate(0)
 {
 
 }
