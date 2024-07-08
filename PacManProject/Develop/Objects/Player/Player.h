@@ -85,7 +85,7 @@ public:
 	void SetPowerDown();
 
 	/// <summary>
-	/// プレイヤーがパワーアップしてるか確認する
+	/// プレイヤーが死んだ状態になったか確認する
 	/// </summary>
 	/// <returns>プレイヤーの状態</returns>
 	bool GetDestroy() const;
