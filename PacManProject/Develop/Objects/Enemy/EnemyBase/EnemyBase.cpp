@@ -1,5 +1,5 @@
 #include "EnemyBase.h"
-#include "../../Utility/ResourceManager.h"
+#include "../../../Utility/ResourceManager.h"
 #include "DxLib.h"
 
 EnemyBase::EnemyBase() : 
@@ -7,7 +7,7 @@ EnemyBase::EnemyBase() :
 	dead_animation(),
 	velocity(0.0f),
 	enemy_state(eEnemyState::HOUSE),
-	now_direction(eDirectionState::DOWN),
+	now_direction(eEnemyMoveState::DOWN),
 	animation_time(0.0f),
 	animation_count(0),
 	state_time(0),
@@ -45,10 +45,23 @@ void EnemyBase::Initialize()
 
 void EnemyBase::Update(float delta_second)
 {
-	// プレイヤー状態によって、動作を変える
+	// 敵の状態によって、動作を変える
 	switch (enemy_state)
 	{
+	case eEnemyState::HOUSE:
+		break;
 
+	case eEnemyState::REST:
+		break;
+
+	case eEnemyState::CHASE:
+		break;
+
+	case eEnemyState::SCARED:
+		break;
+
+	case eEnemyState::DIE:
+		break;
 	}
 }
 
@@ -108,13 +121,13 @@ void EnemyBase::Movement(float delta_second)
 {
 	switch (now_direction)
 	{
-	case eDirectionState::UP:
+	case eEnemyMoveState::UP:
 		break;
-	case eDirectionState::RIGHT:
+	case eEnemyMoveState::RIGHT:
 		break;
-	case eDirectionState::DOWN:
+	case eEnemyMoveState::DOWN:
 		break;
-	case eDirectionState::LEFT:
+	case eEnemyMoveState::LEFT:
 		break;
 	default:
 		break;

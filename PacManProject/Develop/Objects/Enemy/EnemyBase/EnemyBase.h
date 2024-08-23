@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "../../GameObject.h"
-#include "../../Utility/StageData.h"
+#include "../../../Utility/StageData.h"
 #include "../../Player/Player.h"
+#include "../State/Enum/EnemyMoveState.h"
 
 // 状況状態
 enum eEnemyState
@@ -16,24 +17,13 @@ enum eEnemyState
 
 class EnemyBase : public GameObject
 {
-private:
-	// 進行方向状態
-	enum eDirectionState : unsigned char
-	{
-		UP,
-		RIGHT,
-		DOWN,
-		LEFT,
-		NONE,
-	};
-
 protected:
 
 	std::vector<int> move_animation;		// 移動のアニメーション
 	std::vector<int> dead_animation;		// 死亡のアニメーション
 	Vector2D velocity;					// 移動量
 	eEnemyState enemy_state;			// 敵の状態
-	eDirectionState now_direction;			// 現在進行方向状態
+	eEnemyMoveState now_direction;			// 現在進行方向状態
 	float animation_time;				// アニメーション時間
 	int animation_count;				// アニメーション添字
 	int state_time;				// 状態時間
