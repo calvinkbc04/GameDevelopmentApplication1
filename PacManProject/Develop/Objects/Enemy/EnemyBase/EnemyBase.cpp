@@ -7,7 +7,7 @@ EnemyBase::EnemyBase() :
 	dead_animation(),
 	velocity(0.0f),
 	enemy_state(eEnemyState::HOUSE),
-	now_direction(eEnemyMoveState::DOWN),
+	now_direction(eEnemyMoveState::MOVE_DOWN),
 	animation_time(0.0f),
 	animation_count(0),
 	state_time(0),
@@ -121,13 +121,13 @@ void EnemyBase::Movement(float delta_second)
 {
 	switch (now_direction)
 	{
-	case eEnemyMoveState::UP:
+	case eEnemyMoveState::MOVE_UP:
 		break;
-	case eEnemyMoveState::RIGHT:
+	case eEnemyMoveState::MOVE_RIGHT:
 		break;
-	case eEnemyMoveState::DOWN:
+	case eEnemyMoveState::MOVE_DOWN:
 		break;
-	case eEnemyMoveState::LEFT:
+	case eEnemyMoveState::MOVE_LEFT:
 		break;
 	default:
 		break;

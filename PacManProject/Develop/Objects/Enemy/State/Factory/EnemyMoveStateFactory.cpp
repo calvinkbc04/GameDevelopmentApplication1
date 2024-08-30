@@ -11,24 +11,24 @@ EnemyMoveStateFactory* EnemyMoveStateFactory::instance = nullptr;
 
 void EnemyMoveStateFactory::Initialize(class Enemy& enemy)
 {
-	down = new MoveDownState(&enemy);
-	left = new MoveLeftState(&enemy);
-	right = new MoveRightState(&enemy);
-	up = new MoveUpState(&enemy);
+	move_down = new MoveDownState(&enemy);
+	move_left = new MoveLeftState(&enemy);
+	move_right = new MoveRightState(&enemy);
+	move_up = new MoveUpState(&enemy);
 }
 
 
 void EnemyMoveStateFactory::Finalize()
 {
-	instance->down->Finalize();
-	instance->left->Finalize();
-	instance->right->Finalize();
-	instance->up->Finalize();
+	instance->move_down->Finalize();
+	instance->move_left->Finalize();
+	instance->move_right->Finalize();
+	instance->move_up->Finalize();
 
-	delete instance->down;
-	delete instance->left;
-	delete instance->right;
-	delete instance->up;
+	delete instance->move_down;
+	delete instance->move_left;
+	delete instance->move_right;
+	delete instance->move_up;
 }
 
 
@@ -43,24 +43,24 @@ EnemyMoveStateBase* EnemyMoveStateFactory::Get(class Enemy& enemy, eEnemyMoveSta
 	EnemyMoveStateBase* ret = nullptr;
 	switch (state)
 	{
-	case eEnemyMoveState::DOWN:
-		instance->down->Initialize();
-		ret = instance->down;
+	case eEnemyMoveState::MOVE_DOWN:
+		instance->move_down->Initialize();
+		ret = instance->move_down;
 		break;
 		
-	case eEnemyMoveState::LEFT:
-		instance->left->Initialize();
-		ret = instance->left;
+	case eEnemyMoveState::MOVE_LEFT:
+		instance->move_left->Initialize();
+		ret = instance->move_left;
 		break;
 
-	case eEnemyMoveState::RIGHT:
-		instance->right->Initialize();
-		ret = instance->right;
+	case eEnemyMoveState::MOVE_RIGHT:
+		instance->move_right->Initialize();
+		ret = instance->move_right;
 		break;
 
-	case eEnemyMoveState::UP:
-		instance->up->Initialize();
-		ret = instance->up;
+	case eEnemyMoveState::MOVE_UP:
+		instance->move_up->Initialize();
+		ret = instance->move_up;
 		break;
 
 	case eEnemyMoveState::NONE:

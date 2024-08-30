@@ -15,10 +15,10 @@ private:
 	//シングルトン用　ここまで
 
 private:
-	class MoveDownState* down;
-	class MoveLeftState* left;
-	class MoveRightState* right;
-	class MoveUpState* up;
+	class MoveDownState* move_down;
+	class MoveLeftState* move_left;
+	class MoveRightState* move_right;
+	class MoveUpState* move_up;
 
 private:
 	void Initialize(class Enemy& enemy);

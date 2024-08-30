@@ -35,5 +35,5 @@ void MoveRightState::Draw() const
 
 eEnemyMoveState MoveRightState::GetState() const
 {
-	return eEnemyMoveState::RIGHT;
+	return eEnemyMoveState::MOVE_RIGHT;
 }

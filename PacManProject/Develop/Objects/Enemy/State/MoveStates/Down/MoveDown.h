@@ -5,7 +5,7 @@ class MoveDownState : public EnemyMoveStateBase
 {
 public:
 	//コンストラクタ
-	MoveDownState(class Enemy* e);
+	MoveDownState(class EnemyBase* e);
 
 	//デストラクタ
 	virtual ~MoveDownState();
