@@ -3,7 +3,6 @@
 #include "../../GameObject.h"
 #include "../../../Utility/StageData.h"
 #include "../../Player/Player.h"
-#include "../State/Enum/EnemyMoveState.h"
 
 // 状況状態
 enum eEnemyState
@@ -15,13 +14,23 @@ enum eEnemyState
 	DIE,
 };
 
+enum eEnemyMoveState
+{
+	MOVE_UP,
+	MOVE_RIGHT,
+	MOVE_DOWN,
+	MOVE_LEFT,
+	NONE,
+};
+
 class EnemyBase : public GameObject
 {
 protected:
 
 	std::vector<int> move_animation;		// 移動のアニメーション
 	std::vector<int> dead_animation;		// 死亡のアニメーション
-	//Vector2D velocity;					// 移動量
+	std::vector<int> scared_animation;		// いじき状態のアニメーション
+	Vector2D velocity;					// 移動量
 	eEnemyState enemy_state;			// 敵の状態
 	eEnemyMoveState now_direction;			// 現在進行方向状態
 	float animation_time;				// アニメーション時間
@@ -54,12 +63,11 @@ public:
 protected:
 	void GetPlayerInstance(Player*);
 	Vector2D SetNearTargetPanel();
-	void Movement(float);
-	void HouseMovement(float);
-	virtual void RestMovement(float);
-	virtual void ChaseMovement(float);
-	virtual void ScaredMovement(float);
-	void DeathMovement(float);
+	void HouseMovement(float delta_second);
+	virtual void RestMovement(float delta_second);
+	virtual void ChaseMovement(float delta_second);
+	virtual void ScaredMovement(float delta_second);
+	void DeathMovement(float delta_second);
 
 	void AnimationControl(float delta_second);
 };

@@ -86,7 +86,7 @@ void Scene::Update()
 
 	bullet_spawn_rate++;
 
-	if (bullet_spawn_rate == 30) // <----- "bullet_spawn_rate >= ()" は敵の生成速度
+	if (bullet_spawn_rate == 30) // <----- "bullet_spawn_rate >= ()" はテキの弾の生成速度
 	{
 		bullet_spawn_rate = 0;
 

@@ -5,6 +5,7 @@
 EnemyBase::EnemyBase() : 
 	move_animation(),
 	dead_animation(),
+	scared_animation(),
 	velocity(0.0f),
 	enemy_state(eEnemyState::HOUSE),
 	now_direction(eEnemyMoveState::MOVE_DOWN),
@@ -49,18 +50,28 @@ void EnemyBase::Update(float delta_second)
 	switch (enemy_state)
 	{
 	case eEnemyState::HOUSE:
+		HouseMovement(delta_second);
+		AnimationControl(delta_second);
 		break;
 
 	case eEnemyState::REST:
+		RestMovement(delta_second);
+		AnimationControl(delta_second);
 		break;
 
 	case eEnemyState::CHASE:
+		ChaseMovement(delta_second);
+		AnimationControl(delta_second);
 		break;
 
 	case eEnemyState::SCARED:
+		ScaredMovement(delta_second);
+		AnimationControl(delta_second);
 		break;
 
 	case eEnemyState::DIE:
+		DeathMovement(delta_second);
+		AnimationControl(delta_second);
 		break;
 	}
 }
@@ -90,7 +101,7 @@ void EnemyBase::OnHitCollision(GameObjectBase* hit_object)
 		// 最近傍点を求める
 		Vector2D near_point = NearPointCheck(hc, this->location);
 
-		// Playerからnear_pointへの方向ベクトルを取得
+		// Enemyからnear_pointへの方向ベクトルを取得
 		Vector2D dv2 = near_point - this->location;
 		Vector2D dv = this->location - near_point;
 
@@ -99,6 +110,8 @@ void EnemyBase::OnHitCollision(GameObjectBase* hit_object)
 
 		// diffの分だけ戻る
 		location += dv.Normalize() * diff;
+
+
 	}
 }
 
@@ -117,7 +130,7 @@ Vector2D EnemyBase::SetNearTargetPanel()
 
 }
 
-void EnemyBase::Movement(float delta_second)
+void EnemyBase::HouseMovement(float delta_second)
 {
 	switch (now_direction)
 	{
@@ -134,32 +147,90 @@ void EnemyBase::Movement(float delta_second)
 	}
 }
 
-void EnemyBase::HouseMovement(float delta_second)
-{
-
-}
-
 void EnemyBase::RestMovement(float delta_second)
 {
-
+	switch (now_direction)
+	{
+	case eEnemyMoveState::MOVE_UP:
+		break;
+	case eEnemyMoveState::MOVE_RIGHT:
+		break;
+	case eEnemyMoveState::MOVE_DOWN:
+		break;
+	case eEnemyMoveState::MOVE_LEFT:
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::ChaseMovement(float delta_second)
 {
-
+	switch (now_direction)
+	{
+	case eEnemyMoveState::MOVE_UP:
+		break;
+	case eEnemyMoveState::MOVE_RIGHT:
+		break;
+	case eEnemyMoveState::MOVE_DOWN:
+		break;
+	case eEnemyMoveState::MOVE_LEFT:
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::ScaredMovement(float delta_second)
 {
-
+	switch (now_direction)
+	{
+	case eEnemyMoveState::MOVE_UP:
+		break;
+	case eEnemyMoveState::MOVE_RIGHT:
+		break;
+	case eEnemyMoveState::MOVE_DOWN:
+		break;
+	case eEnemyMoveState::MOVE_LEFT:
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::DeathMovement(float delta_second)
 {
-
+	switch (now_direction)
+	{
+	case eEnemyMoveState::MOVE_UP:
+		break;
+	case eEnemyMoveState::MOVE_RIGHT:
+		break;
+	case eEnemyMoveState::MOVE_DOWN:
+		break;
+	case eEnemyMoveState::MOVE_LEFT:
+		break;
+	default:
+		break;
+	}
 }
 
 void EnemyBase::AnimationControl(float delta_second)
 {
+	switch (enemy_state)
+	{
+	case eEnemyState::HOUSE:
+	case eEnemyState::REST:
+	case eEnemyState::CHASE:
 
+		break;
+
+	case eEnemyState::SCARED:
+
+		break;
+
+	case eEnemyState::HOUSE:DIE:
+
+		break;
+	}
 }

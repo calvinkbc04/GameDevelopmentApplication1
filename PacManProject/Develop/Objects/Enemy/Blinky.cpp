@@ -84,13 +84,13 @@ void Blinky::Movement(float delta_second)
 {
 	switch (now_direction)
 	{
-	case eEnemyMoveState::UP:
+	case eEnemyMoveState::MOVE_UP:
 		break;
-	case eEnemyMoveState::RIGHT:
+	case eEnemyMoveState::MOVE_RIGHT:
 		break;
-	case eEnemyMoveState::DOWN:
+	case eEnemyMoveState::MOVE_DOWN:
 		break;
-	case eEnemyMoveState::LEFT:
+	case eEnemyMoveState::MOVE_LEFT:
 		break;
 	default:
 		break;
